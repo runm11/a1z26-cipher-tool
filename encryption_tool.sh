@@ -26,12 +26,19 @@ elif [[ "$encryption_method" == "A1Z26 Cipher" ]]; then
     read -p "Enter text to encrypt: " text
 
     # Call the Python script for A1Z26 encryption
-    encrypted_text=$(python3 a1z26_cipher.py --a1z26-encrypt "$text")
-    echo "Encrypted Text (A1Z26): $encrypted_text"
-    
-    # Call Python script for decryption
-    decrypted_text=$(python3 a1z26_cipher.py --a1z26-decrypt "$encrypted_text")
-    echo "Decrypted Text (A1Z26): $decrypted_text"
+    encrypted_output=$(python3 a1z26_cipher.py --a1z26-encrypt "$text")
+    encrypted_numbers=$(echo "$encrypted_output" | sed 's/Encrypted (A1Z26): //')
+    echo "Encrypted Text (A1Z26): $encrypted_numbers"
+
+    # Ask if user wants to generate an image
+    read -p "Do you want to generate an image with the encrypted text? (y/n): " generate_image
+    if [[ "$generate_image" == "y" || "$generate_image" == "Y" ]]; then
+        python3 a1z26_cipher.py --a1z26-encrypt "$text" --generate-image
+        echo "Image generated and saved in generated_images/ folder."
+    else
+        # Call Python script for decryption
+        echo "Decrypted Text (A1Z26): $(python3 a1z26_cipher.py --a1z26-decrypt "$encrypted_numbers" | sed 's/Decrypted (A1Z26): //')"
+    fi
 else
     echo "Invalid selection"
 fi
