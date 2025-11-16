@@ -1,0 +1,5 @@
+- [x] Update generate_image_with_text function to use textbbox instead of deprecated textsize
+- [x] Test the script with --a1z26-encrypt and --generate-image arguments
+- [x] Create a new folder for generated images
+- [x] Modify output path to save images in the new folder
+- [x] Add .gitignore to ignore generated images
